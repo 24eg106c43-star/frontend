@@ -1,0 +1,14 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#1f2a1f}
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(135deg,#c8e6c9,#e8f5e9 60%,#fff8e1)}
+.auth-card{width:100%;max-width:400px;background:#fff;padding:30px;border-radius:16px;box-shadow:0 10px 30px #0002}
+.logo{font-size:40px;text-align:center}h1{margin:4px 0;text-align:center;font-size:24px}
+.sub{text-align:center;color:#667;margin:0 0 16px;font-size:14px}
+.tabs{display:flex;background:#eef3ee;border-radius:10px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;padding:8px;border-radius:8px;cursor:pointer;font-size:14px}
+.tabs .on{background:#2e7d32;color:#fff}
+label{display:block;font-size:13px;font-weight:600;color:#667}
+input,select{width:100%;padding:10px;margin:5px 0 12px;border:1px solid #cfd8cf;border-radius:8px;font-size:14px}
+input:focus,select:focus{outline:2px solid #a5d6a7}
+.btn{width:100%;padding:11px;border:0;border-radius:8px;background:#2e7d32;color:#fff;font-size:15px;cursor:pointer}.btn:hover{background:#1b5e20}
+.err{color:#c62828;font-size:14px;min-height:18px;margin:0 0 8px}.demo{font-size:12px;color:#667;text-align:center;margin:14px 0 0}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login | Farmer Direct Market</title><link rel="stylesheet" href="auth.css"></head>
+<body>
+<div class="auth-page">
+  <form id="form" class="auth-card">
+    <div class="logo">🌾</div>
+    <h1 id="title">Welcome back</h1>
+    <p class="sub" id="sub">Login to Farmer Direct Market</p>
+    <div class="tabs"><button type="button" id="tLogin" class="on">Login</button><button type="button" id="tReg">Register</button></div>
+    <div id="regOnly" hidden>
+      <label>I am a</label>
+      <select id="role"><option value="customer">Customer (buyer)</option><option value="farmer">Farmer (seller)</option></select>
+      <label>Name</label><input id="name" placeholder="Your name">
+      <label>Phone</label><input id="phone" placeholder="Phone number">
+      <label id="locLabel">Address</label><input id="loc" placeholder="Address">
+    </div>
+    <label>Email</label><input id="email" type="email" placeholder="you@example.com" required>
+    <label>Password</label><input id="password" type="password" placeholder="Enter your password" required>
+    <p id="err" class="err"></p>
+    <button id="submit" class="btn" type="submit">Login</button>
+    <p class="demo">Demo: <b>customer@demo.com</b>, <b>farmer@demo.com</b> or <b>admin@demo.com</b> / <b>demo123</b></p>
+  </form>
+</div>
+<script src="auth.js"></script>
+</body></html>
