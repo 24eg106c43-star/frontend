@@ -44,7 +44,10 @@ $('form').onsubmit = async (e) => {
   const body = { email: $('email').value, password: $('password').value };
   if (mode === 'register') Object.assign(body, { name: $('name').value, role: $('role').value, phone: $('phone').value, location: $('loc').value, address: $('loc').value });
   try {
-    const base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').replace(/\/+$/, '');
+    let base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').trim().replace(/\/+$/, '');
+    if (base.endsWith('/api')) {
+      base = base.substring(0, base.length - 4);
+    }
     const endpoint = base ? (base + '/api/auth/' + mode) : ('/api/auth/' + mode);
     const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const d = await r.json().catch(() => ({}));

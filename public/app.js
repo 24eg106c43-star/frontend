@@ -7,8 +7,15 @@ const low = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k.toLower
 const $ = id => document.getElementById(id);
 function toast(m) { const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2800); }
 function getApiEndpoint(url) {
-  const base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').replace(/\/+$/, '');
-  return base ? (base + '/api' + url) : ('/api' + url);
+  let base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').trim().replace(/\/+$/, '');
+  if (base.endsWith('/api')) {
+    base = base.substring(0, base.length - 4);
+  }
+  let path = url.startsWith('/') ? url : ('/' + url);
+  if (!path.startsWith('/api')) {
+    path = '/api' + path;
+  }
+  return base ? (base + path) : path;
 }
 function configureBackend() {
   const cur = localStorage.getItem('backend_url') || '';

@@ -5,10 +5,19 @@ const fs = require('fs');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const PORT = process.env.PORT || 3000;
-const API_URL = process.env.API_URL || 'http://localhost:8080';
+let API_URL = (process.env.API_URL || 'http://localhost:8080').trim().replace(/\/+$/, '');
+if (API_URL.endsWith('/api')) {
+  API_URL = API_URL.substring(0, API_URL.length - 4);
+}
 
 const app = express();
-app.use('/api', createProxyMiddleware({ target: API_URL, changeOrigin: true, pathRewrite: (p) => '/api' + p }));
+app.use('/api', createProxyMiddleware({
+  target: API_URL,
+  changeOrigin: true,
+  pathRewrite: (p) => {
+    return p.startsWith('/api') ? p : ('/api' + p);
+  }
+}));
 
 const staticDir = fs.existsSync(path.join(__dirname, 'dist')) ? path.join(__dirname, 'dist') : path.join(__dirname, 'public');
 app.use(express.static(staticDir));
