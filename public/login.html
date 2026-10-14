@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login | Farmer Direct Market</title><link rel="stylesheet" href="auth.css"></head>
+<title>Login | Farmer Direct Market</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>">
+<link rel="stylesheet" href="auth.css"></head>
 <body>
 <div class="auth-page">
   <form id="form" class="auth-card">
@@ -20,6 +22,17 @@
     <p id="err" class="err"></p>
     <button id="submit" class="btn" type="submit">Login</button>
     <p class="demo">Demo: <b>customer@demo.com</b>, <b>farmer@demo.com</b> or <b>admin@demo.com</b> / <b>demo123</b></p>
+
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e0e0e0;font-size:12px;text-align:center;">
+      <details id="backendSettings">
+        <summary style="cursor:pointer;color:#2e7d32;font-weight:600;">⚙️ Backend API Settings</summary>
+        <div style="margin-top:8px;text-align:left;">
+          <label style="font-size:11px;">Backend Render URL</label>
+          <input id="backendUrlInput" placeholder="https://farmer-direct-backend.onrender.com" style="margin-bottom:6px;">
+          <button type="button" id="saveBackendUrlBtn" class="btn" style="padding:7px;font-size:12px;">Save Backend URL</button>
+        </div>
+      </details>
+    </div>
   </form>
 </div>
 <script src="auth.js"></script>

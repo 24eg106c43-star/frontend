@@ -2,6 +2,24 @@ const $ = (id) => document.getElementById(id);
 if (localStorage.getItem('token')) location.href = 'index.html';   // already logged in
 let mode = 'login';
 
+// Initialize Backend URL settings
+const savedUrl = localStorage.getItem('backend_url') || '';
+if ($('backendUrlInput')) $('backendUrlInput').value = savedUrl;
+if ($('saveBackendUrlBtn')) {
+  $('saveBackendUrlBtn').onclick = () => {
+    const val = $('backendUrlInput').value.trim();
+    if (val) {
+      localStorage.setItem('backend_url', val.replace(/\/+$/, ''));
+      $('err').style.color = '#2e7d32';
+      $('err').textContent = 'Backend URL saved: ' + val;
+    } else {
+      localStorage.removeItem('backend_url');
+      $('err').style.color = '#667';
+      $('err').textContent = 'Backend URL reset to default relative /api';
+    }
+  };
+}
+
 function setMode(m) {
   mode = m;
   const reg = m === 'register';
@@ -22,6 +40,7 @@ $('role').onchange = () => {
 
 $('form').onsubmit = async (e) => {
   e.preventDefault();
+  $('err').style.color = '#c62828';
   const body = { email: $('email').value, password: $('password').value };
   if (mode === 'register') Object.assign(body, { name: $('name').value, role: $('role').value, phone: $('phone').value, location: $('loc').value, address: $('loc').value });
   try {
@@ -29,9 +48,17 @@ $('form').onsubmit = async (e) => {
     const endpoint = base ? (base + '/api/auth/' + mode) : ('/api/auth/' + mode);
     const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const d = await r.json().catch(() => ({}));
+    if (r.status === 404) {
+      $('err').innerHTML = 'Backend returned 404 (Not Found).<br>Set your <b>Backend Render URL</b> below:';
+      if ($('backendSettings')) $('backendSettings').open = true;
+      return;
+    }
     if (!r.ok) { $('err').textContent = d.error || 'Something went wrong'; return; }
     localStorage.setItem('token', d.token);
     localStorage.setItem('session', JSON.stringify({ name: d.name, role: d.role, profileId: d.profileId }));
     location.href = 'index.html';
-  } catch { $('err').textContent = 'Cannot reach the server. Is the backend running?'; }
+  } catch (err) {
+    $('err').innerHTML = 'Cannot reach backend server.<br>Ensure backend is running and Backend URL is configured below:';
+    if ($('backendSettings')) $('backendSettings').open = true;
+  }
 };

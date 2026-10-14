@@ -10,12 +10,36 @@ function getApiEndpoint(url) {
   const base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').replace(/\/+$/, '');
   return base ? (base + '/api' + url) : ('/api' + url);
 }
+function configureBackend() {
+  const cur = localStorage.getItem('backend_url') || '';
+  const url = prompt('Enter your Backend API Render URL (e.g. https://your-backend.onrender.com):', cur);
+  if (url !== null) {
+    if (url.trim()) {
+      localStorage.setItem('backend_url', url.trim().replace(/\/+$/, ''));
+    } else {
+      localStorage.removeItem('backend_url');
+    }
+    location.reload();
+  }
+}
+
 async function api(url, method = 'GET', body) {
-  const r = await fetch(getApiEndpoint(url), { method, headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: body ? JSON.stringify(body) : undefined });
-  if (r.status === 401) { logout(); throw new Error('Please login again'); }
-  const d = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(d.error || 'Request failed');
-  return Array.isArray(d) ? d.map(low) : d;
+  try {
+    const r = await fetch(getApiEndpoint(url), { method, headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: body ? JSON.stringify(body) : undefined });
+    if (r.status === 401) { logout(); throw new Error('Please login again'); }
+    if (r.status === 404) {
+      toast('API returned 404. Click ⚙️ API to verify your backend URL.');
+      throw new Error('API 404: Endpoint not found');
+    }
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Request failed');
+    return Array.isArray(d) ? d.map(low) : d;
+  } catch (err) {
+    if (!err.message.includes('Please login')) {
+      toast(err.message || 'Cannot reach API server');
+    }
+    throw err;
+  }
 }
 const val = id => $(id).value.trim();
 

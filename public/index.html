@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Farmer Direct Market</title><link rel="stylesheet" href="style.css"></head>
+<title>Farmer Direct Market</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>">
+<link rel="stylesheet" href="style.css"></head>
 <body>
-<header><div class="userbar"><span id="who"></span><button onclick="logout()">Logout</button></div><h1>🌾 Farmer Direct Market</h1><p>Buy fresh from farmers. AI-suggested fair prices.</p></header>
+<header><div class="userbar"><span id="who"></span><button onclick="configureBackend()" title="Configure Backend URL">⚙️ API</button><button onclick="logout()">Logout</button></div><h1>🌾 Farmer Direct Market</h1><p>Buy fresh from farmers. AI-suggested fair prices.</p></header>
 <nav><button data-tab="shop" class="active">Shop</button><button data-tab="farmer">Farmer</button><button data-tab="orders">Orders</button><button data-tab="admin">Admin</button></nav>
 <main>
 <section id="shop">
