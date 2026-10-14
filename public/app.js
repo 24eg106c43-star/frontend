@@ -6,8 +6,12 @@ function logout() { localStorage.clear(); location.href = 'login.html'; }
 const low = o => Object.fromEntries(Object.entries(o).map(([k, v]) => [k.toLowerCase(), v]));
 const $ = id => document.getElementById(id);
 function toast(m) { const t = $('toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2800); }
+function getApiEndpoint(url) {
+  const base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').replace(/\/+$/, '');
+  return base ? (base + '/api' + url) : ('/api' + url);
+}
 async function api(url, method = 'GET', body) {
-  const r = await fetch('/api' + url, { method, headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(getApiEndpoint(url), { method, headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: body ? JSON.stringify(body) : undefined });
   if (r.status === 401) { logout(); throw new Error('Please login again'); }
   const d = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(d.error || 'Request failed');

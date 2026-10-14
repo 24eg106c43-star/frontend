@@ -25,7 +25,9 @@ $('form').onsubmit = async (e) => {
   const body = { email: $('email').value, password: $('password').value };
   if (mode === 'register') Object.assign(body, { name: $('name').value, role: $('role').value, phone: $('phone').value, location: $('loc').value, address: $('loc').value });
   try {
-    const r = await fetch('/api/auth/' + mode, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const base = (window.API_BASE_URL || localStorage.getItem('backend_url') || '').replace(/\/+$/, '');
+    const endpoint = base ? (base + '/api/auth/' + mode) : ('/api/auth/' + mode);
+    const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const d = await r.json().catch(() => ({}));
     if (!r.ok) { $('err').textContent = d.error || 'Something went wrong'; return; }
     localStorage.setItem('token', d.token);
