@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Farmer Direct Market</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><h1>🌾 Farmer Direct Market</h1><p>Buy fresh from farmers. AI-suggested fair prices.</p></header>
+<nav><button data-tab="shop" class="active">Shop</button><button data-tab="farmer">Farmer</button><button data-tab="orders">Orders</button><button data-tab="admin">Admin</button></nav>
+<main>
+<section id="shop">
+  <div class="card row"><input id="q" placeholder="Search crop or category"><button onclick="loadProducts()">Search</button></div>
+  <div class="card row"><input id="custId" type="number" placeholder="Your customer ID"><span class="muted">New? Register below</span></div>
+  <div id="products" class="grid"></div>
+  <div class="card"><h3>Customer Register</h3>
+    <input id="cName" placeholder="Name"><input id="cPhone" placeholder="Phone"><input id="cAddr" placeholder="Address">
+    <button onclick="registerCustomer()">Register</button></div>
+</section>
+<section id="farmer" hidden>
+  <div class="card"><h3>Farmer Register</h3>
+    <input id="fName" placeholder="Name"><input id="fPhone" placeholder="Phone"><input id="fLoc" placeholder="Location">
+    <button onclick="registerFarmer()">Register</button></div>
+  <div class="card"><h3>Add Crop</h3>
+    <input id="pFarmer" type="number" placeholder="Your farmer ID">
+    <input id="pCrop" placeholder="Crop name (e.g. Tomato)"><input id="pCat" placeholder="Category">
+    <input id="pQty" type="number" placeholder="Quantity (kg)"><input id="pQual" placeholder="Quality (A/B/C)">
+    <input id="pDate" type="date"><input id="pPrice" type="number" placeholder="Price per kg">
+    <button class="alt" onclick="suggestPrice()">🤖 Suggest price</button><button onclick="addProduct()">Add crop</button>
+    <p id="suggest" class="muted"></p></div>
+</section>
+<section id="orders" hidden>
+  <div class="card row"><select id="role"><option value="customer">Customer ID</option><option value="farmer">Farmer ID</option></select>
+    <input id="oId" type="number" placeholder="ID"><button onclick="loadOrders()">Load orders</button></div>
+  <p id="dash" class="muted"></p><div id="orderList"></div>
+</section>
+<section id="admin" hidden><div class="card"><button onclick="loadAdmin()">Load system summary</button><p id="adminOut"></p></div></section>
+</main>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body></html>
