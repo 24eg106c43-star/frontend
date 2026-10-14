@@ -4,6 +4,10 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>">
 <link rel="stylesheet" href="style.css"></head>
 <body>
+<div id="backendBanner" style="display:none;background:#fff3cd;color:#856404;padding:12px 16px;text-align:center;font-size:14px;border-bottom:1px solid #ffeeba;">
+  ⚠️ <b>Backend not connected:</b> Your frontend is running as a Static Site and needs your Render Backend Web Service URL.
+  <button onclick="configureBackend()" style="background:#856404;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;margin-left:10px;">⚙️ Set Backend URL</button>
+</div>
 <header><div class="userbar"><span id="who"></span><button onclick="configureBackend()" title="Configure Backend URL">⚙️ API</button><button onclick="logout()">Logout</button></div><h1>🌾 Farmer Direct Market</h1><p>Buy fresh from farmers. AI-suggested fair prices.</p></header>
 <nav><button data-tab="shop" class="active">Shop</button><button data-tab="farmer">Farmer</button><button data-tab="orders">Orders</button><button data-tab="admin">Admin</button></nav>
 <main>
@@ -29,5 +33,24 @@
 <section id="admin" hidden><div class="card"><button onclick="loadAdmin()">Load system summary</button><p id="adminOut"></p></div></section>
 </main>
 <div id="toast"></div>
+
+<!-- Modal for Backend Configuration -->
+<dialog id="backendModal" style="border:none;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);padding:24px;max-width:480px;width:90%;">
+  <form method="dialog" style="display:flex;flex-direction:column;gap:12px;">
+    <h3 style="margin:0;color:#2e7d32;">⚙️ Connect Backend API</h3>
+    <p style="margin:0;font-size:13px;color:#555;line-height:1.4;">
+      Your frontend is hosted on Render as a Static Site. Enter your Render Backend Web Service URL (e.g. <code>https://backend-xxxx.onrender.com</code>):
+    </p>
+    <input id="modalBackendUrl" type="url" placeholder="https://backend-xxxx.onrender.com" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;">
+    <div id="modalStatus" style="font-size:13px;min-height:18px;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px;">
+      <button type="button" onclick="testBackendConnection()" style="background:#e0e0e0;color:#333;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;">🔍 Test Connection</button>
+      <button type="button" onclick="saveBackendConnection()" style="background:#2e7d32;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;">💾 Save & Connect</button>
+      <button type="button" onclick="$('backendModal').close()" style="background:transparent;border:1px solid #ccc;color:#666;padding:8px 12px;border-radius:6px;cursor:pointer;">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="config.js"></script>
 <script src="app.js"></script>
 </body></html>

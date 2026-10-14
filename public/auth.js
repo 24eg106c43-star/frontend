@@ -3,8 +3,42 @@ if (localStorage.getItem('token')) location.href = 'index.html';   // already lo
 let mode = 'login';
 
 // Initialize Backend URL settings
-const savedUrl = localStorage.getItem('backend_url') || '';
+const savedUrl = localStorage.getItem('backend_url') || window.API_BASE_URL || '';
 if ($('backendUrlInput')) $('backendUrlInput').value = savedUrl;
+
+// If hosted and no backend configured, expand backend settings automatically
+if (!savedUrl && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+  if ($('backendSettings')) $('backendSettings').open = true;
+}
+
+if ($('testBackendUrlBtn')) {
+  $('testBackendUrlBtn').onclick = async () => {
+    const resEl = $('backendTestResult');
+    let url = ($('backendUrlInput').value || '').trim().replace(/\/+$/, '');
+    if (!url) {
+      resEl.style.color = '#c62828';
+      resEl.textContent = 'Please enter a URL first.';
+      return;
+    }
+    if (url.endsWith('/api')) url = url.substring(0, url.length - 4);
+    resEl.style.color = '#0277bd';
+    resEl.textContent = 'Testing connection...';
+    try {
+      const r = await fetch(url + '/api');
+      if (r.ok) {
+        resEl.style.color = '#2e7d32';
+        resEl.textContent = '✅ Connected! Backend is online.';
+      } else {
+        resEl.style.color = '#c62828';
+        resEl.textContent = '⚠️ Responded with HTTP ' + r.status;
+      }
+    } catch (e) {
+      resEl.style.color = '#c62828';
+      resEl.textContent = '❌ Failed to reach backend: ' + e.message;
+    }
+  };
+}
+
 if ($('saveBackendUrlBtn')) {
   $('saveBackendUrlBtn').onclick = () => {
     const val = $('backendUrlInput').value.trim();

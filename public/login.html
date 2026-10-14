@@ -28,12 +28,17 @@
         <summary style="cursor:pointer;color:#2e7d32;font-weight:600;">⚙️ Backend API Settings</summary>
         <div style="margin-top:8px;text-align:left;">
           <label style="font-size:11px;">Backend Render URL</label>
-          <input id="backendUrlInput" placeholder="https://farmer-direct-backend.onrender.com" style="margin-bottom:6px;">
-          <button type="button" id="saveBackendUrlBtn" class="btn" style="padding:7px;font-size:12px;">Save Backend URL</button>
+          <input id="backendUrlInput" placeholder="https://backend-xxxx.onrender.com" style="margin-bottom:6px;width:100%;box-sizing:border-box;padding:6px;border:1px solid #ccc;border-radius:4px;">
+          <div style="display:flex;gap:6px;margin-top:4px;">
+            <button type="button" id="testBackendUrlBtn" class="btn" style="flex:1;padding:7px;font-size:12px;background:#666;">🔍 Test</button>
+            <button type="button" id="saveBackendUrlBtn" class="btn" style="flex:1;padding:7px;font-size:12px;background:#2e7d32;">💾 Save</button>
+          </div>
+          <div id="backendTestResult" style="margin-top:6px;font-size:11px;min-height:14px;"></div>
         </div>
       </details>
     </div>
   </form>
 </div>
+<script src="config.js"></script>
 <script src="auth.js"></script>
 </body></html>
